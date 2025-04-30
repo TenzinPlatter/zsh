@@ -48,11 +48,12 @@ alias gb='git branch '
 alias gP='git push'
 alias gp='git pull'
 alias gc='git commit'
-alias gd='git diff'
+alias gd='git diff --output-indicator-new=" " --output-indicator-old=" "' 
 alias gco='git checkout '
 alias gk='gitk --all&'
 alias gx='gitx --all'
 alias gh='git hist'
+alias gcl='git clone'
 
 alias vn="nv"
 alias nvf='nv $(fzf)'
