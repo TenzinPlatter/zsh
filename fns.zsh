@@ -1,5 +1,52 @@
 #!bin/zsh
 
+cppg() {
+  for file in "$@"; do
+    cp $file /var/lib/pgadmin/storage/plattertenzin_gmail.com
+  done
+}
+
+lnpg() {
+  for file in "$@"; do
+    # not abs file
+    if [[ ! $file == /* ]]; then
+      file=$PWD/$file
+    fi
+  done
+
+    # ${file:t} returns leaf of fp
+    ln -s $file /var/lib/pgadmin/storage/plattertenzin_gmail.com/${file:t}
+}
+
+cpg() {
+  toremove=()
+  
+  for file in /var/lib/pgadmin/storage/plattertenzin_gmail.com/* ; do
+    if [[ ! -f $file && ! ( -L $file && -e $file ) ]]; then
+      toremove+=$file
+      echo found bad symlink: $file
+    fi
+  done
+
+  if [[ ${#toremove} -eq "0" ]]; then
+    echo No bad symlinks found
+    return
+  fi
+
+  
+  printf "Would you like to remove the above symlinks? [Y/n] "
+  read -r input
+
+  setopt nocasematch
+  if [[ $input == "y" || -z $input ]]; then
+    for file in $toremove; do
+      rm $file
+    done
+  fi
+
+  unsetopt nocasematch
+}
+
 nv() {
 if [[ $# -eq 0 ]]; then
 		nvim .
@@ -16,7 +63,7 @@ hx() {
 	fi
 }
 
-function findbin{
+function findbin() {
     local purple='\e[1;35m' bright='\e[0;1m' green='\e[1;32m' reset='\e[0m'
     printf "${green}zsh${reset}: command ${purple}NOT${reset} found: ${bright}'%s'${reset}\n" "$1"
 
@@ -53,5 +100,35 @@ function findbin{
 }
 
 workon() {
-	source $1/bin/activate
+  # idk from chatgpt
+  setopt nullglob
+  
+  venv=""
+  
+  if [[ ! -z "$1" ]]; then
+    venv=$1
+  else
+    for d in */ ; do
+      # $d ends in slash already, so don't include it in path
+      if [[ -f "$d"bin/activate ]]; then
+        venv=$d
+        break
+      fi
+    done 2>/dev/null
+  fi
+
+  if [[ -z $venv ]]; then
+    echo no venv found/provided, defaulting to \'venv\'
+    venv="venv"
+  elif [[ -d $venv && -f $venv/bin/activate ]]; then
+    echo found venv \'$venv\', activating...
+  else
+    echo creating venv \'$venv\'
+  fi
+
+  if [[ ! -d $venv ]]; then
+    python3 -m venv $venv
+  fi  
+
+	source $venv/bin/activate
 }
