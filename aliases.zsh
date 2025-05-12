@@ -80,6 +80,8 @@ alias hxal='hx ~/.zsh/aliases.zsh && source ~/.zshrc'
 alias hxfn='hx ~/.zsh/fns.zsh && source ~/.zshrc'
 alias hxsc='hx ~/.scripts'
 alias hxzsh='hx ~/.zsh && source ~/.zshrc'
+alias hxcl="hx ~/.clang-format"
+alias hxtx="hx ~/.tmux.conf"
 
 alias ..='cd ..'
 alias ...='cd ../..'
