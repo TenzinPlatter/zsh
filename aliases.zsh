@@ -68,6 +68,8 @@ alias nval='nv ~/.zsh/aliases.zsh && source ~/.zshrc'
 alias nvfn='nv ~/.zsh/fns.zsh && source ~/.zshrc'
 alias nvsc='nv ~/.scripts'
 alias nvzsh='nv ~/.zsh && source ~/.zshrc'
+alias nvcl="nv ~/.clang-format"
+alias nvtx="nv ~/.tmux.conf"
 
 alias xh="hx"
 alias hxf='hx $(fzf)'
