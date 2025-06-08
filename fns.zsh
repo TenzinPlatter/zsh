@@ -13,26 +13,24 @@ run-ls() {
 	zle accept-line
 }
 
-nv() {
-if [[ $# -eq 0 ]]; then
-		nvim .
-	else
-		nvim "$@"
-	fi
-}
+# nv() {
+# if [[ $# -eq 0 ]]; then
+# 		nvim .
+# 	else
+# 		nvim "$@"
+# 	fi
+# }
 
-hx() {
-	if [[ $# -eq 0 ]]; then
-		helix .
-	else
-		helix "$@"
-	fi
-}
+# hx() {
+# 	if [[ $# -eq 0 ]]; then
+# 		helix .
+# 	else
+# 		helix "$@"
+# 	fi
+# }
 
 function findbin() {
     local purple='\e[1;35m' bright='\e[0;1m' green='\e[1;32m' reset='\e[0m'
-    printf "${green}zsh${reset}: command ${purple}NOT${reset} found: ${bright}'%s'${reset}\n" "$1"
-
     PM="pm.sh"
     # Try to find pm.sh in common locations
     if [ ! command -v "${PM}" ] &>/dev/null; then
