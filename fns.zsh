@@ -1,50 +1,16 @@
 #!bin/zsh
 
-cppg() {
-  for file in "$@"; do
-    cp $file /var/lib/pgadmin/storage/plattertenzin_gmail.com
-  done
+set-cd() {
+	if [[ -z $BUFFER ]]; then
+		LBUFFER="cd "
+	else
+		BUFFER="cd $BUFFER"
+		zle accept-line
+	fi
 }
-
-lnpg() {
-  for file in "$@"; do
-    # not abs file
-    if [[ ! $file == /* ]]; then
-      file=$PWD/$file
-    fi
-  done
-
-    # ${file:t} returns leaf of fp
-    ln -s $file /var/lib/pgadmin/storage/plattertenzin_gmail.com/${file:t}
-}
-
-cpg() {
-  toremove=()
-  
-  for file in /var/lib/pgadmin/storage/plattertenzin_gmail.com/* ; do
-    if [[ ! -f $file && ! ( -L $file && -e $file ) ]]; then
-      toremove+=$file
-      echo found bad symlink: $file
-    fi
-  done
-
-  if [[ ${#toremove} -eq "0" ]]; then
-    echo No bad symlinks found
-    return
-  fi
-
-  
-  printf "Would you like to remove the above symlinks? [Y/n] "
-  read -r input
-
-  setopt nocasematch
-  if [[ $input == "y" || -z $input ]]; then
-    for file in $toremove; do
-      rm $file
-    done
-  fi
-
-  unsetopt nocasematch
+run-ls() {
+	BUFFER="ls $BUFFER"
+	zle accept-line
 }
 
 nv() {
