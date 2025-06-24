@@ -1,4 +1,30 @@
-#!bin/zsh
+#!/usr/bin/env zsh
+
+yir() {
+	sudo apt install ros-jazzy-$1
+}
+
+sr() {
+	source /opt/ros/jazzy/setup.zsh
+	source /home/tenzin/greenroom/rosdep/install/setup.zsh
+	source /home/tenzin/greenroom/pwmdriver/install/setup.zsh
+
+	if [[ -f ./install/setup.zsh ]]; then
+		source ./install/setup.zsh
+	fi
+}
+
+foxglove() {
+	if ! command -v "ros2" >/dev/null 2>&1; then
+		source /opt/ros/jazzy/setup.zsh
+	fi
+
+	ros2 launch foxglove_bridge foxglove_bridge_launch.xml > /dev/null  2>&1 &
+}
+
+set-nv() {
+	BUFFER="nv $BUFFER"
+}
 
 set-cd() {
 	if [[ -z $BUFFER ]]; then
@@ -8,26 +34,11 @@ set-cd() {
 		zle accept-line
 	fi
 }
+
 run-ls() {
 	BUFFER="ls $BUFFER"
 	zle accept-line
 }
-
-# nv() {
-# if [[ $# -eq 0 ]]; then
-# 		nvim .
-# 	else
-# 		nvim "$@"
-# 	fi
-# }
-
-# hx() {
-# 	if [[ $# -eq 0 ]]; then
-# 		helix .
-# 	else
-# 		helix "$@"
-# 	fi
-# }
 
 function findbin() {
     local purple='\e[1;35m' bright='\e[0;1m' green='\e[1;32m' reset='\e[0m'

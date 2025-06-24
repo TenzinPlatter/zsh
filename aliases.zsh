@@ -1,5 +1,9 @@
 #!bin/zsh
 
+alias cbuild="colcon build --cmake-args -DCMAKE_EXPORT_COMPILE_COMMANDS=ON"
+
+alias ssr="ssh rock@rock-5b"
+
 alias killpgad="kill $(pidof /home/tenzin/.scripts/open_pgadmin.sh)"
 alias workoff="deactivate"
 alias cinit='eval "$(/home/tenzin/anaconda3/bin/conda shell.zsh hook)" && conda init'
@@ -27,9 +31,10 @@ alias rmd="rm -rf"
 alias sp="sudo pacman"
 alias spi="sp -S"
 alias spr="sp -Rs"
-alias yi="yay -S"
-alias yr="yay -Rs"
-alias yu="yay -Syu"
+alias yi="sudo apt install"
+alias yr="sudo apt remove"
+alias yu="sudo apt update"
+alias yug="sudo apt update"
 
 alias rbug="RUST_BACKTRACE=1"
 alias cr="cargo run"
@@ -41,6 +46,8 @@ alias dbr="distrobox enter ros"
 alias tmuxkill="tmux kill-session"
 alias srtx="tmux source ~/.tmux.conf"
 alias tx="tmux"
+alias txa="tmux attach"
+alias txat="tmux attach -t"
 
 alias fzfd="find . -type d -print | fzf"
 alias pkginfo="pacman -Qq | fzf --preview 'pacman -Qil {} | bat -fpl yml' --layout=reverse  --bind 'enter:execute(pacman -Qil {} | less)'"
