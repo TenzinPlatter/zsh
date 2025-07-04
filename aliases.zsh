@@ -58,8 +58,6 @@ alias gx='gitx --all'
 alias gcl='git clone'
 
 alias vn="nv"
-alias nv="nvim"
-alias nvf='nv $(fzf)'
 alias nvfd='nv $(fzfd)'
 alias nvsh='nv ~/.zshrc && source ~/.zshrc'
 alias nvenv='nv ~/.zshenv && source ~/.zshenv'
