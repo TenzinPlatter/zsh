@@ -8,26 +8,11 @@ set-cd() {
 		zle accept-line
 	fi
 }
+
 run-ls() {
 	BUFFER="ls $BUFFER"
 	zle accept-line
 }
-
-# nv() {
-# if [[ $# -eq 0 ]]; then
-# 		nvim .
-# 	else
-# 		nvim "$@"
-# 	fi
-# }
-
-# hx() {
-# 	if [[ $# -eq 0 ]]; then
-# 		helix .
-# 	else
-# 		helix "$@"
-# 	fi
-# }
 
 function findbin() {
     local purple='\e[1;35m' bright='\e[0;1m' green='\e[1;32m' reset='\e[0m'
@@ -72,7 +57,7 @@ workon() {
   if [[ ! -z "$1" ]]; then
     venv=$1
   else
-    for d in */ ; do
+    for d in */ .*/; do
       # $d ends in slash already, so don't include it in path
       if [[ -f "$d"bin/activate ]]; then
         venv=$d
