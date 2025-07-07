@@ -1,5 +1,6 @@
 #!/usr/bin/env zsh
 
+
 nr() {
     if [ $# -eq 0 ]; then
         echo "Usage: nix-remove-many <package1> <package2> ..."

@@ -55,8 +55,6 @@ alias dbr="distrobox enter ros"
 alias tmuxkill="tmux kill-session"
 alias srtx="tmux source ~/.tmux.conf"
 alias tx="tmux"
-alias txa="tmux attach"
-alias txat="tmux attach -t"
 
 alias fzfd="find . -type d -print | fzf"
 alias pkginfo="pacman -Qq | fzf --preview 'pacman -Qil {} | bat -fpl yml' --layout=reverse  --bind 'enter:execute(pacman -Qil {} | less)'"
