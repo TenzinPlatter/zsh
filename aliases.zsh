@@ -75,8 +75,6 @@ alias gcl='git clone'
 alias pca="pre-commit run --all"
 
 alias vn="nv"
-alias nv="nvim"
-alias nvf='nv $(fzf)'
 alias nvfd='nv $(fzfd)'
 alias nvsh='nv ~/.zshrc && source ~/.zshrc'
 alias nvenv='nv ~/.zshenv && source ~/.zshenv'
