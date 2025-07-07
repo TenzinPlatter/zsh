@@ -1,4 +1,85 @@
-#!bin/zsh
+#!/usr/bin/env zsh
+
+nr() {
+    if [ $# -eq 0 ]; then
+        echo "Usage: nix-remove-many <package1> <package2> ..."
+        echo "Example: nix-remove-many firefox git nodejs"
+        return 1
+    fi
+    
+    echo "Removing packages: $@"
+    for package in "$@"; do
+        echo "Removing: $package"
+        nix-env -e "$package"
+    done
+}
+
+ni() {
+    # Check if at least one argument is provided
+    if [[ $# -eq 0 ]]; then
+        echo "Error: At least one package name is required"
+        echo "Usage: nix-install <package1> [package2] [package3] ..."
+        return 1
+    fi
+    
+    # Loop through all arguments and try to install each package
+    for package in "$@"; do
+        echo "Installing package: $package"
+        
+        # Try to install the package using nix-env
+        if nix-env -iA nixpkgs.$package; then
+            echo "✅ Successfully installed: $package"
+        else
+            echo "❌ Failed to install: $package"
+            echo "   Trying alternative installation method..."
+            
+            # Try installing without the nixpkgs prefix
+            if nix-env -i $package; then
+                echo "✅ Successfully installed: $package (alternative method)"
+            else
+                echo "❌ Failed to install: $package (both methods failed)"
+            fi
+        fi
+        
+        echo "---"
+    done
+    
+    echo "Installation process completed for all packages."
+}
+
+yir() {
+	sudo apt install ros-jazzy-$1
+}
+
+sr() {
+	source /opt/ros/jazzy/setup.zsh
+	echo "Sourced global overlay at /opt/ros/jazzy"
+	source /home/tenzin/greenroom/rosdep/install/setup.zsh
+	echo "Sourced rosdep fork at /home/tenzin/greenroom/rosdep"
+
+	if [[ -f ./install/setup.zsh ]]; then
+		source ./install/setup.zsh
+		echo "Sourced local workspace"
+	fi
+}
+
+foxglove() {
+	if ! command -v "ros2" >/dev/null 2>&1; then
+		source /opt/ros/jazzy/setup.zsh
+	fi
+
+	ros2 launch foxglove_bridge foxglove_bridge_launch.xml > /dev/null  2>&1 &
+}
+
+set-nv() {
+	if [[ -z $BUFFER ]]; then
+		fzf-file-widget
+		BUFFER="nv $BUFFER"
+		zle accept-line
+	else
+		LBUFFER="nv "
+	fi
+}
 
 sudo-command-line () {
         [[ -z $BUFFER ]] && LBUFFER="$(fc -ln -1)"
@@ -48,26 +129,11 @@ set-cd() {
 		zle accept-line
 	fi
 }
+
 run-ls() {
 	BUFFER="ls $BUFFER"
 	zle accept-line
 }
-
-# nv() {
-# if [[ $# -eq 0 ]]; then
-# 		nvim .
-# 	else
-# 		nvim "$@"
-# 	fi
-# }
-
-# hx() {
-# 	if [[ $# -eq 0 ]]; then
-# 		helix .
-# 	else
-# 		helix "$@"
-# 	fi
-# }
 
 function findbin() {
     local purple='\e[1;35m' bright='\e[0;1m' green='\e[1;32m' reset='\e[0m'
@@ -112,7 +178,8 @@ workon() {
   if [[ ! -z "$1" ]]; then
     venv=$1
   else
-    for d in */ ; do
+		# match hidden and normal dirs
+    for d in */ .*/ ; do
       # $d ends in slash already, so don't include it in path
       if [[ -f "$d"bin/activate ]]; then
         venv=$d
