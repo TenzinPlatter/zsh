@@ -1,5 +1,19 @@
 #!/usr/bin/env zsh
+txa() {
+  if [[ -z "$1" ]]; then
+    tmux attach-session -t "$1"
+  else
+    tmux attach-session
+  fi
+}
 
+txn() {
+  if [[ -z "$1" ]]; then
+    tmux new-session -t "$1"
+  else
+    tmux attach-session
+  fi
+}
 
 nr() {
     if [ $# -eq 0 ]; then
