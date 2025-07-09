@@ -68,10 +68,15 @@ yir() {
 }
 
 sr() {
-	source /opt/ros/jazzy/setup.zsh
-	echo "Sourced global overlay at /opt/ros/jazzy"
-	source /home/tenzin/greenroom/rosdep/install/setup.zsh
-	echo "Sourced rosdep fork at /home/tenzin/greenroom/rosdep"
+  if ! command -v ros2 &> /dev/null; then
+    source /opt/ros/jazzy/setup.zsh
+    echo "Sourced global overlay at /opt/ros/jazzy"
+  fi
+
+  if [[ ! "$(which rosdep)" = "/home/tenzin/greenroom/rosdep/install/rosdep/bin/rosdep" ]]; then
+    source /home/tenzin/greenroom/rosdep/install/setup.zsh
+    echo "Sourced rosdep fork at /home/tenzin/greenroom/rosdep"
+  fi
 
 	if [[ -f ./install/setup.zsh ]]; then
 		source ./install/setup.zsh
