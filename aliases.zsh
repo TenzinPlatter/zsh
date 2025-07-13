@@ -3,9 +3,6 @@ alias gvr="gama vessel down && gama vessel up"
 alias gv="gama vessel"
 alias dk="docker"
 
-alias and="&&"
-alias or="||"
-
 alias cbuild="colcon build --cmake-args -DCMAKE_EXPORT_COMPILE_COMMANDS=ON"
 alias cbuilds="colcon build --symlink-install --cmake-args -DCMAKE_EXPORT_COMPILE_COMMANDS=ON"
 
