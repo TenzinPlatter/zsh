@@ -1,4 +1,146 @@
-#!bin/zsh
+#!/usr/bin/env zsh
+
+txa() {
+  if [[ -z "$1" ]]; then
+    tmux attach-session
+  else
+    tmux attach-session -t "$1"
+  fi
+}
+
+txn() {
+  if [[ -z "$1" ]]; then
+    tmux new-session
+  else
+    tmux new-session -s "$1"
+  fi
+}
+
+nr() {
+    if [ $# -eq 0 ]; then
+        echo "Usage: nix-remove-many <package1> <package2> ..."
+        echo "Example: nix-remove-many firefox git nodejs"
+        return 1
+    fi
+    
+    echo "Removing packages: $@"
+    for package in "$@"; do
+        echo "Removing: $package"
+        nix-env -e "$package"
+    done
+}
+
+ni() {
+    # Check if at least one argument is provided
+    if [[ $# -eq 0 ]]; then
+        echo "Error: At least one package name is required"
+        echo "Usage: nix-install <package1> [package2] [package3] ..."
+        return 1
+    fi
+    
+    # Loop through all arguments and try to install each package
+    for package in "$@"; do
+        echo "Installing package: $package"
+        
+        # Try to install the package using nix-env
+        if nix-env -iA nixpkgs.$package; then
+            echo "✅ Successfully installed: $package"
+        else
+            echo "❌ Failed to install: $package"
+            echo "   Trying alternative installation method..."
+            
+            # Try installing without the nixpkgs prefix
+            if nix-env -i $package; then
+                echo "✅ Successfully installed: $package (alternative method)"
+            else
+                echo "❌ Failed to install: $package (both methods failed)"
+            fi
+        fi
+        
+        echo "---"
+    done
+    
+    echo "Installation process completed for all packages."
+}
+
+yir() {
+	sudo apt install ros-jazzy-$1
+}
+
+sr() {
+  if ! command -v ros2 &> /dev/null; then
+    source /opt/ros/jazzy/setup.zsh
+    echo "Sourced global overlay at /opt/ros/jazzy"
+  fi
+
+  if [[ ! "$(which rosdep)" = "/home/tenzin/gr/rosdep/install/rosdep/bin/rosdep" ]]; then
+    source /home/tenzin/gr/rosdep/install/setup.zsh
+    echo "Sourced rosdep fork at /home/tenzin/gr/rosdep"
+  fi
+
+	if [[ -f ./install/setup.zsh ]]; then
+		source ./install/setup.zsh
+		echo "Sourced local workspace"
+	fi
+}
+
+foxglove() {
+	if ! command -v "ros2" >/dev/null 2>&1; then
+		source /opt/ros/jazzy/setup.zsh
+	fi
+
+	ros2 launch foxglove_bridge foxglove_bridge_launch.xml > /dev/null  2>&1 &
+}
+
+set-nv() {
+	if [[ -z $BUFFER ]]; then
+		fzf-file-widget
+		BUFFER="nv $BUFFER"
+		zle accept-line
+	else
+		LBUFFER="nv "
+	fi
+}
+
+sudo-command-line () {
+        [[ -z $BUFFER ]] && LBUFFER="$(fc -ln -1)"
+        local WHITESPACE=""
+        if [[ ${LBUFFER:0:1} = " " ]]
+        then
+                WHITESPACE=" "
+                LBUFFER="${LBUFFER:1}"
+        fi
+        {
+                local EDITOR=${SUDO_EDITOR:-${VISUAL:-$EDITOR}}
+                if [[ -z "$EDITOR" ]]
+                then
+                        case "$BUFFER" in
+                                (sudo\ -e\ *) __sudo-replace-buffer "sudo -e" "" ;;
+                                (sudo\ *) __sudo-replace-buffer "sudo" "" ;;
+                                (*) LBUFFER="sudo $LBUFFER"  ;;
+                        esac
+                        return
+                fi
+                local cmd="${${(Az)BUFFER}[1]}"
+                local realcmd="${${(Az)aliases[$cmd]}[1]:-$cmd}"
+                local editorcmd="${${(Az)EDITOR}[1]}"
+                if [[ "$realcmd" = (\$EDITOR|$editorcmd|${editorcmd:c}) || "${realcmd:c}" = ($editorcmd|${editorcmd:c}) ]] || builtin which -a "$realcmd" | command grep -Fx -q "$editorcmd"
+                then
+                        __sudo-replace-buffer "$cmd" "sudo -e"
+                        return
+                fi
+                case "$BUFFER" in
+                        ($editorcmd\ *) __sudo-replace-buffer "$editorcmd" "sudo -e" ;;
+                        (\$EDITOR\ *) __sudo-replace-buffer '$EDITOR' "sudo -e" ;;
+                        (sudo\ -e\ *) __sudo-replace-buffer "sudo -e" "$EDITOR" ;;
+                        (sudo\ *) __sudo-replace-buffer "sudo" "" ;;
+                        (*) LBUFFER="sudo $LBUFFER"  ;;
+                esac
+        } always {
+                LBUFFER="${WHITESPACE}${LBUFFER}"
+                zle && zle redisplay
+        }
+}
 
 set-cd() {
 	if [[ -z $BUFFER ]]; then
@@ -57,7 +199,8 @@ workon() {
   if [[ ! -z "$1" ]]; then
     venv=$1
   else
-    for d in */ .*/; do
+		# match hidden and normal dirs
+    for d in */ .*/ ; do
       # $d ends in slash already, so don't include it in path
       if [[ -f "$d"bin/activate ]]; then
         venv=$d

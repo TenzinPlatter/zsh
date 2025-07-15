@@ -1,4 +1,16 @@
 #!bin/zsh
+alias gvr="gama vessel down && gama vessel up"
+alias gv="gama vessel"
+alias dk="docker"
+
+alias cbuild="colcon build --cmake-args -DCMAKE_EXPORT_COMPILE_COMMANDS=ON"
+alias cbuilds="colcon build --symlink-install --cmake-args -DCMAKE_EXPORT_COMPILE_COMMANDS=ON"
+
+alias srz="source ~/.zshrc"
+
+alias ssr="ssh rock@rock-5b"
+alias ssb="ssh gr@blueboat"
+# alias ssr="ssh rock@10.71.11.117"
 
 alias killpgad="kill $(pidof /home/tenzin/.scripts/open_pgadmin.sh)"
 alias workoff="deactivate"
@@ -27,9 +39,9 @@ alias rmd="rm -rf"
 alias sp="sudo pacman"
 alias spi="sp -S"
 alias spr="sp -Rs"
-alias yi="yay -S"
-alias yr="yay -Rs"
-alias yu="yay -Syu"
+alias in="sudo apt install"
+alias re="sudo apt remove"
+alias up="sudo apt update && sudo apt upgrade"
 
 alias rbug="RUST_BACKTRACE=1"
 alias cr="cargo run"
@@ -56,6 +68,7 @@ alias gco='git checkout '
 alias gk='gitk --all&'
 alias gx='gitx --all'
 alias gcl='git clone'
+alias pca="pre-commit run --all"
 
 alias nv="nvim"
 alias vn="nv"
