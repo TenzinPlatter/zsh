@@ -9,6 +9,7 @@ alias cbuilds="colcon build --symlink-install --cmake-args -DCMAKE_EXPORT_COMPIL
 alias srz="source ~/.zshrc"
 
 alias ssr="ssh rock@rock-5b"
+alias ssb="ssh gr@blueboat.local"
 # alias ssr="ssh rock@10.71.11.117"
 
 alias killpgad="kill $(pidof /home/tenzin/.scripts/open_pgadmin.sh)"
