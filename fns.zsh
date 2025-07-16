@@ -73,9 +73,9 @@ sr() {
     echo "Sourced global overlay at /opt/ros/jazzy"
   fi
 
-  if [[ ! "$(which rosdep)" = "/home/tenzin/gr/rosdep/install/rosdep/bin/rosdep" ]]; then
-    source /home/tenzin/gr/rosdep/install/setup.zsh
-    echo "Sourced rosdep fork at /home/tenzin/gr/rosdep"
+  if [[ ! "$(which rosdep)" = "/home/tenzin/Repositories/rosdep/install/rosdep/bin/rosdep" ]]; then
+    source /home/tenzin/Repositories/rosdep/install/setup.zsh
+    echo "Sourced rosdep fork at /home/tenzin/Repositories/rosdep"
   fi
 
 	if [[ -f ./install/setup.zsh ]]; then
