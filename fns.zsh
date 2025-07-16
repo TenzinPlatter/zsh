@@ -63,7 +63,7 @@ ni() {
     echo "Installation process completed for all packages."
 }
 
-yir() {
+inr() {
 	sudo apt install ros-jazzy-$1
 }
 
