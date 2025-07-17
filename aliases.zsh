@@ -70,6 +70,7 @@ alias gx='gitx --all'
 alias gcl='git clone'
 alias pca="pre-commit run --all"
 
+alias nv="nvim"
 alias vn="nv"
 alias nvfd='nv $(fzfd)'
 alias nvsh='nv ~/.zshrc && source ~/.zshrc'
