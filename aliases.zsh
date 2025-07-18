@@ -41,7 +41,7 @@ alias spi="sp -S"
 alias spr="sp -Rs"
 alias in="sudo apt install"
 alias re="sudo apt remove"
-alias up="sudo apt update && sudo apt upgrade"
+alias up="sudo apt update && sudo apt upgrade && nix-env -u '*'"
 
 alias rbug="RUST_BACKTRACE=1"
 alias cr="cargo run"
