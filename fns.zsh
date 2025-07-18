@@ -5,7 +5,10 @@ gfr() {
   old="$2"
   new="$3"
 
-  grep -lR "$old" $1 | xargs sed -i 's/${old}/${new}/g'
+  echo "Replacing $old with $new in $dir"
+  command="grep -lR ${old} ${dir} | xargs sed -i 's/${old}/${new}/g'"
+  echo Running "$command"
+  grep -lR ${old} ${dir} | xargs sed -i 's/${old}/${new}/g'
 }
 
 txa() {
