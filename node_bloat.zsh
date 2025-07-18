@@ -5,7 +5,7 @@ node() {
     [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
   fi
 
-  node "$@"
+  command node "$@"
 }
 
 npm() {
@@ -15,7 +15,7 @@ npm() {
     [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
   fi
 
-  npm "$@"
+  command npm "$@"
 }
 
 pnpm() {
@@ -27,5 +27,5 @@ pnpm() {
     esac
   fi
   
-  pnpm "$@"
+  command pnpm "$@"
 }
