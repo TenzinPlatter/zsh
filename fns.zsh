@@ -1,5 +1,13 @@
 #!/usr/bin/env zsh
 
+gfr() {
+  dir="$1"
+  old="$2"
+  new="$3"
+
+  grep -lR "$old" $1 | xargs sed -i 's/${old}/${new}/g'
+}
+
 txa() {
   if [[ -z "$1" ]]; then
     tmux attach-session
