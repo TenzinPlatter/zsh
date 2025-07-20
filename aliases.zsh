@@ -1,4 +1,4 @@
-[[ -f "~/.zsh/machine.conf" ]] && source ~/.zsh/machine.conf
+[[ -f ~/.zsh/machine.zsh ]] && source ~/.zsh/machine.zsh
 
 alias gvr="gama vessel down && gama vessel up"
 alias gv="gama vessel"
