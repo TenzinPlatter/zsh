@@ -1,4 +1,5 @@
-#!bin/zsh
+[[ -f "~/.zsh/machine.conf" ]] && source ~/.zsh/machine.conf
+
 alias gvr="gama vessel down && gama vessel up"
 alias gv="gama vessel"
 alias dk="docker"
