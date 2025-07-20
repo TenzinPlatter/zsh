@@ -37,13 +37,6 @@ alias p='python'
 alias mkdir="mkdir -p"
 alias rmd="rm -rf"
 
-alias sp="sudo pacman"
-alias spi="sp -S"
-alias spr="sp -Rs"
-alias in="sudo apt install"
-alias del="sudo apt remove"
-alias up="sudo apt update && sudo apt upgrade"
-
 alias rbug="RUST_BACKTRACE=1"
 alias cr="cargo run"
 alias ct="cargo test"

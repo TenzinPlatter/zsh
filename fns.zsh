@@ -1,5 +1,16 @@
 #!/usr/bin/env zsh
 
+gfr() {
+  dir="$1"
+  old="$2"
+  new="$3"
+
+  echo "Replacing $old with $new in $dir"
+  command="grep -lR ${old} ${dir} | xargs sed -i 's/${old}/${new}/g'"
+  echo Running "$command"
+  grep -lR ${old} ${dir} | xargs sed -i 's/${old}/${new}/g'
+}
+
 txa() {
   if [[ -z "$1" ]]; then
     tmux attach-session
@@ -63,7 +74,7 @@ ni() {
     echo "Installation process completed for all packages."
 }
 
-yir() {
+inr() {
 	sudo apt install ros-jazzy-$1
 }
 
@@ -73,9 +84,9 @@ sr() {
     echo "Sourced global overlay at /opt/ros/jazzy"
   fi
 
-  if [[ ! "$(which rosdep)" = "/home/tenzin/gr/rosdep/install/rosdep/bin/rosdep" ]]; then
-    source /home/tenzin/gr/rosdep/install/setup.zsh
-    echo "Sourced rosdep fork at /home/tenzin/gr/rosdep"
+  if [[ ! "$(which rosdep)" = "/home/tenzin/Repositories/rosdep/install/rosdep/bin/rosdep" ]]; then
+    source /home/tenzin/Repositories/rosdep/install/setup.zsh
+    echo "Sourced rosdep fork at /home/tenzin/Repositories/rosdep"
   fi
 
 	if [[ -f ./install/setup.zsh ]]; then
