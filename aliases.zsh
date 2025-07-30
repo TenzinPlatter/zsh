@@ -34,6 +34,7 @@ alias cat='bat'
 alias mk="make"
 alias cc="clang"
 alias p='python'
+alias python="python3"
 alias mkdir="mkdir -p"
 alias rmd="rm -rf"
 
