@@ -1,5 +1,9 @@
 #!/usr/bin/env zsh
 
+de() {
+    docker exec -it $1 bash -l
+}
+
 txa() {
   if [[ -z "$1" ]]; then
     tmux attach-session
