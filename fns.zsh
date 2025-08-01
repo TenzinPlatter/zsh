@@ -1,7 +1,12 @@
 #!/usr/bin/env zsh
 
 de() {
-    docker exec -it $1 bash -l
+    if [[ "$1" == "-p" ]]; then
+        docker exec -it "platform_$2" bash -l
+        return
+    fi
+
+    docker exec -it "$1" bash -l
 }
 
 txa() {
