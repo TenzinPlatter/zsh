@@ -5,7 +5,6 @@ de() {
 
     if [[ "$1" == "-p" ]]; then
         container_name="platform_${2}"
-        return
     fi
 
     if [[ ! "$(docker ps -q -f name=$container_name)" ]]; then
