@@ -1,12 +1,18 @@
 #!/usr/bin/env zsh
 
 de() {
+    container_name="$1"
+
     if [[ "$1" == "-p" ]]; then
-        docker exec -it "platform_$2" bash -l
+        container_name="platform_${2}"
         return
     fi
 
-    docker exec -it "$1" bash -l
+    if [[ ! "$(docker ps -q -f name=$container_name)" ]]; then
+        docker compose up -d "$container_name"
+    fi
+
+    docker exec -it "$container_name" bash -l
 }
 
 txa() {
