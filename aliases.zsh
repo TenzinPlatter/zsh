@@ -10,6 +10,7 @@ alias cbuild="colcon build --cmake-args -DCMAKE_EXPORT_COMPILE_COMMANDS=ON"
 alias cbuilds="colcon build --symlink-install --cmake-args -DCMAKE_EXPORT_COMPILE_COMMANDS=ON"
 
 alias srz="source ~/.zshrc"
+alias new="exec zsh"
 
 alias ssr="ssh rock@rock-5b"
 alias ssb="ssh gr@blueboat"
