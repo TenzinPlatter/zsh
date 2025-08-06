@@ -248,20 +248,11 @@ missim() {
         # Call the actual missim command with all arguments
         missim "$@"
     else
-        # Find the virtual environment - look for venv in current dir or parent dirs
-        local venv_path=""
-        local search_dir="$PWD"
+        # Source the hardcoded virtual environment
+        local venv_path="/home/tenzin/Repositories/missim/venv"
         
-        while [[ "$search_dir" != "/" ]]; do
-            if [[ -f "$search_dir/venv/bin/activate" ]]; then
-                venv_path="$search_dir/venv"
-                break
-            fi
-            search_dir="$(dirname "$search_dir")"
-        done
-        
-        if [[ -z "$venv_path" ]]; then
-            echo "Error: No virtual environment found and missim command not available"
+        if [[ ! -f "$venv_path/bin/activate" ]]; then
+            echo "Error: Virtual environment not found at $venv_path"
             # Restore the function before returning
             source /home/tenzin/.zsh/fns.zsh
             return 1
