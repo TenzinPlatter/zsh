@@ -238,3 +238,35 @@ workon() {
 
 	source $venv/bin/activate
 }
+
+missim() {
+    # Check if missim command exists outside of this function
+    if command -v missim > /dev/null 2>&1; then
+        # Call the actual missim command with all arguments
+        command missim "$@"
+    else
+        # Source the virtual environment and call missim
+        local current_dir="$PWD"
+        
+        # Find the virtual environment - look for venv in current dir or parent dirs
+        local venv_path=""
+        local search_dir="$PWD"
+        
+        while [[ "$search_dir" != "/" ]]; do
+            if [[ -f "$search_dir/venv/bin/activate" ]]; then
+                venv_path="$search_dir/venv"
+                break
+            fi
+            search_dir="$(dirname "$search_dir")"
+        done
+        
+        if [[ -z "$venv_path" ]]; then
+            echo "Error: No virtual environment found and missim command not available"
+            return 1
+        fi
+        
+        # Source the virtual environment and call missim
+        source "$venv_path/bin/activate"
+        command missim "$@"
+    fi
+}
