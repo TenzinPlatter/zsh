@@ -240,14 +240,14 @@ workon() {
 }
 
 missim() {
-    # Check if missim command exists outside of this function
+    # Unset the function temporarily to check for the real command
+    unset -f missim
+    
+    # Check if missim command exists
     if command -v missim > /dev/null 2>&1; then
         # Call the actual missim command with all arguments
-        command missim "$@"
+        missim "$@"
     else
-        # Source the virtual environment and call missim
-        local current_dir="$PWD"
-        
         # Find the virtual environment - look for venv in current dir or parent dirs
         local venv_path=""
         local search_dir="$PWD"
@@ -262,11 +262,25 @@ missim() {
         
         if [[ -z "$venv_path" ]]; then
             echo "Error: No virtual environment found and missim command not available"
+            # Restore the function before returning
+            source /home/tenzin/.zsh/fns.zsh
             return 1
         fi
         
         # Source the virtual environment and call missim
         source "$venv_path/bin/activate"
-        command missim "$@"
+        
+        # Check if missim is now available
+        if command -v missim > /dev/null 2>&1; then
+            missim "$@"
+        else
+            echo "Error: missim command not found even after sourcing virtual environment"
+            # Restore the function before returning
+            source /home/tenzin/.zsh/fns.zsh
+            return 1
+        fi
     fi
+    
+    # Restore the function for next time
+    source /home/tenzin/.zsh/fns.zsh
 }
