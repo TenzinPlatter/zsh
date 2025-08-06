@@ -6,6 +6,7 @@ alias dk="docker"
 alias dcu="docker compose up -d"
 alias dcub="docker compose up -d --build"
 
+alias cb="colcon build"
 alias cbuild="colcon build --cmake-args -DCMAKE_EXPORT_COMPILE_COMMANDS=ON"
 alias cbuilds="colcon build --symlink-install --cmake-args -DCMAKE_EXPORT_COMPILE_COMMANDS=ON"
 
