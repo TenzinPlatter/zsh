@@ -275,23 +275,3 @@ missim() {
     # Restore the function for next time
     source /home/tenzin/.zsh/fns.zsh
 }
-
-run-temp-command() {
-    local saved_buffer="$BUFFER"
-    local saved_cursor="$CURSOR"
-    BUFFER=""
-    CURSOR=0
-    zle reset-prompt
-    zle -M "Enter command to run:"
-    
-    local temp_command
-    vared temp_command
-    
-    if [[ -n "$temp_command" ]]; then
-        eval "$temp_command"
-    fi
-    
-    BUFFER="$saved_buffer"
-    CURSOR="$saved_cursor"
-    zle redisplay
-}
