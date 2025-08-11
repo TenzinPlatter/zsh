@@ -151,11 +151,6 @@ set-cd() {
 	fi
 }
 
-run-ls() {
-	BUFFER="ls $BUFFER"
-	zle accept-line
-}
-
 function findbin() {
     local purple='\e[1;35m' bright='\e[0;1m' green='\e[1;32m' reset='\e[0m'
     PM="pm.sh"
