@@ -1,19 +1,5 @@
 #!/usr/bin/env zsh
 
-de() {
-    container_name="$1"
-
-    if [[ "$1" == "-p" ]]; then
-        container_name="platform_${2}"
-    fi
-
-    if [[ ! "$(docker ps -q -f name=$container_name)" ]]; then
-        docker compose up -d "$container_name"
-    fi
-
-    docker exec -it "$container_name" bash -l
-}
-
 txa() {
   if [[ -z "$1" ]]; then
     tmux attach-session
