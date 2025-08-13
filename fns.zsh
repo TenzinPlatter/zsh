@@ -261,33 +261,27 @@ lookout() {
     # Unset the function temporarily to check for the real command
     unset -f lookout
     
-    # Check if lookout command exists
+    # Source the hardcoded virtual environment first
+    local venv_path="/home/tenzin/Repositories/lookout/.venv"
+    
+    if [[ ! -f "$venv_path/bin/activate" ]]; then
+        echo "Error: Virtual environment not found at $venv_path"
+        # Restore the function before returning
+        source /home/tenzin/.zsh/fns.zsh
+        return 1
+    fi
+    
+    # Source the virtual environment and call lookout
+    source "$venv_path/bin/activate"
+    
+    # Check if lookout is now available
     if command -v lookout > /dev/null 2>&1; then
-        # Call the actual lookout command with all arguments
-        lookout "$@"
+        command lookout "$@"
     else
-        # Source the hardcoded virtual environment
-        local venv_path="/home/tenzin/Repositories/lookout/.venv"
-        
-        if [[ ! -f "$venv_path/bin/activate" ]]; then
-            echo "Error: Virtual environment not found at $venv_path"
-            # Restore the function before returning
-            source /home/tenzin/.zsh/fns.zsh
-            return 1
-        fi
-        
-        # Source the virtual environment and call lookout
-        source "$venv_path/bin/activate"
-        
-        # Check if lookout is now available
-        if command -v lookout > /dev/null 2>&1; then
-            lookout "$@"
-        else
-            echo "Error: lookout command not found even after sourcing virtual environment"
-            # Restore the function before returning
-            source /home/tenzin/.zsh/fns.zsh
-            return 1
-        fi
+        echo "Error: lookout command not found even after sourcing virtual environment"
+        # Restore the function before returning
+        source /home/tenzin/.zsh/fns.zsh
+        return 1
     fi
     
     # Restore the function for next time
