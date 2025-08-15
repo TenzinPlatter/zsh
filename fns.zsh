@@ -287,3 +287,34 @@ lookout() {
     # Restore the function for next time
     source /home/tenzin/.zsh/fns.zsh
 }
+
+gama() {
+    # Unset the function temporarily to check for the real command
+    unset -f gama
+    
+    # Source the hardcoded virtual environment first
+    local venv_path="/home/tenzin/Repositories/gama/.venv"
+    
+    if [[ ! -f "$venv_path/bin/activate" ]]; then
+        echo "Error: Virtual environment not found at $venv_path"
+        # Restore the function before returning
+        source /home/tenzin/.zsh/fns.zsh
+        return 1
+    fi
+    
+    # Source the virtual environment and call gama
+    source "$venv_path/bin/activate"
+    
+    # Check if gama is now available
+    if command -v gama > /dev/null 2>&1; then
+        command gama "$@"
+    else
+        echo "Error: gama command not found even after sourcing virtual environment"
+        # Restore the function before returning
+        source /home/tenzin/.zsh/fns.zsh
+        return 1
+    fi
+    
+    # Restore the function for next time
+    source /home/tenzin/.zsh/fns.zsh
+}
