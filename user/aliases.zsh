@@ -1,15 +1,22 @@
+[[ -f ~/.zsh/machine.zsh ]] && source ~/.zsh/machine.zsh
+
 alias gvr="gama vessel down && gama vessel up"
 alias gv="gama vessel"
 alias dk="docker"
+alias dl="docker logs"
+alias dcu="docker compose up -d"
+alias dcub="docker compose up -d --build"
 
+alias cb="colcon build"
 alias cbuild="colcon build --cmake-args -DCMAKE_EXPORT_COMPILE_COMMANDS=ON"
 alias cbuilds="colcon build --symlink-install --cmake-args -DCMAKE_EXPORT_COMPILE_COMMANDS=ON"
 
 alias srz="source ~/.zshrc"
+alias new="exec zsh"
 
 alias ssr="ssh rock@rock-5b"
 alias ssb="ssh gr@blueboat"
-# alias ssr="ssh rock@10.71.11.117"
+alias ssp="ssh pandora@pandora"
 
 alias killpgad="kill $(pidof /home/tenzin/.scripts/open_pgadmin.sh)"
 alias workoff="deactivate"
@@ -32,6 +39,7 @@ alias cat='bat'
 alias mk="make"
 alias cc="clang"
 alias p='python'
+alias python="python3"
 alias mkdir="mkdir -p"
 alias rmd="rm -rf"
 
@@ -65,36 +73,19 @@ alias pca="pre-commit run --all"
 alias nv="nvim"
 alias vn="nv"
 alias nvfd='nv $(fzfd)'
-alias nvsh='nv ~/.zshrc && source ~/.zshrc'
-alias nvenv='nv ~/.zshenv && source ~/.zshenv'
+alias nvsh='nv ~/.config/zsh/.zshrc && new'
+alias nvenv='nv ~/.config/zsh/.zshenv && source ~/.config/zsh/.zshenv'
 alias nvhl='nv ~/.config/hypr/.'
-alias nvcf='nv ~/.config/nvim/.'
-alias nval='nv ~/.zsh/aliases.zsh && source ~/.zshrc'
-alias nvfn='nv ~/.zsh/fns.zsh && source ~/.zshrc'
+alias nvcf='cd ~/.config/nvim && nv && cd -'
+alias nval='nv ~/.config/zsh/user/aliases.zsh && new'
+alias nvfn='nv ~/.config/zsh/user/fns.zsh && new'
 alias nvsc='nv ~/.scripts'
-alias nvzsh='nv ~/.zsh && source ~/.zshrc'
+alias nvzsh='cd ~/.config/zsh && nv && source ~/.config/.zsh/.zshrc && cd -'
 alias nvcl="nv ~/.clang-format"
 alias nvtx="nv ~/.tmux.conf"
-
-alias xh="hx"
-alias hxf='hx $(fzf)'
-alias hxfd='hx $(fzfd)'
-alias hxsh='hx ~/.zshrc && source ~/.zshrc'
-alias hxenv='hx ~/.zshenv && source ~/.zshenv'
-alias hxhl='hx ~/.config/hypr/.'
-alias hxcf='hx ~/.config/helix/.'
-alias hxal='hx ~/.zsh/aliases.zsh && source ~/.zshrc'
-alias hxfn='hx ~/.zsh/fns.zsh && source ~/.zshrc'
-alias hxsc='hx ~/.scripts'
-alias hxzsh='hx ~/.zsh && source ~/.zshrc'
-alias hxcl="hx ~/.clang-format"
-alias hxtx="hx ~/.tmux.conf"
 
 alias ..='cd ..'
 alias ...='cd ../..'
 alias .3='cd ../../..'
 alias .4='cd ../../../..'
 alias .5='cd ../../../../..'
-
-[[ -f ~/.zsh/machine.zsh ]] && source ~/.zsh/machine.zsh
-

@@ -1,16 +1,5 @@
 #!/usr/bin/env zsh
 
-gfr() {
-  dir="$1"
-  old="$2"
-  new="$3"
-
-  echo "Replacing $old with $new in $dir"
-  command="grep -lR ${old} ${dir} | xargs sed -i 's/${old}/${new}/g'"
-  echo Running "$command"
-  grep -lR ${old} ${dir} | xargs sed -i 's/${old}/${new}/g'
-}
-
 txa() {
   if [[ -z "$1" ]]; then
     tmux attach-session
@@ -80,12 +69,8 @@ inr() {
 
 sr() {
   if ! command -v ros2 &> /dev/null; then
-    ros_path="/opt/ros/jazzy/setup.zsh"
-    if [[ -f /opt/ros/humble/setup.zsh ]]; then
-      ros_path="/opt/ros/humble/setup.zsh"
-    fi
-    source $ros_path
-    echo "Sourced global overlay at $ros_path"
+    source /opt/ros/jazzy/setup.zsh
+    echo "Sourced global overlay at /opt/ros/jazzy"
   fi
 
   if [[ ! "$(which rosdep)" = "/home/tenzin/Repositories/rosdep/install/rosdep/bin/rosdep" ]]; then
@@ -101,7 +86,7 @@ sr() {
 
 foxglove() {
 	if ! command -v "ros2" >/dev/null 2>&1; then
-		sr
+		source /opt/ros/jazzy/setup.zsh
 	fi
 
 	ros2 launch foxglove_bridge foxglove_bridge_launch.xml > /dev/null  2>&1 &
@@ -164,11 +149,6 @@ set-cd() {
 		BUFFER="cd $BUFFER"
 		zle accept-line
 	fi
-}
-
-run-ls() {
-	BUFFER="ls $BUFFER"
-	zle accept-line
 }
 
 function findbin() {
@@ -238,4 +218,142 @@ workon() {
   fi  
 
 	source $venv/bin/activate
+}
+
+missim() {
+    # Unset the function temporarily to check for the real command
+    unset -f missim
+    
+    # Check if missim command exists
+    if command -v missim > /dev/null 2>&1; then
+        # Call the actual missim command with all arguments
+        missim "$@"
+    else
+        # Source the hardcoded virtual environment
+        local venv_path="/home/tenzin/Repositories/missim/missim"
+        
+        if [[ ! -f "$venv_path/bin/activate" ]]; then
+            echo "Error: Virtual environment not found at $venv_path"
+            # Restore the function before returning
+            source /home/tenzin/.config/zsh/user/fns.zsh
+            return 1
+        fi
+        
+        # Source the virtual environment and call missim
+        source "$venv_path/bin/activate"
+        
+        # Check if missim is now available
+        if command -v missim > /dev/null 2>&1; then
+            missim "$@"
+        else
+            echo "Error: missim command not found even after sourcing virtual environment"
+            # Restore the function before returning
+            source /home/tenzin/.config/zsh/user/fns.zsh
+            return 1
+        fi
+    fi
+    
+    # Restore the function for next time
+    source /home/tenzin/.config/zsh/user/fns.zsh
+}
+
+lookout() {
+    # Unset the function temporarily to check for the real command
+    unset -f lookout
+    
+    # Source the hardcoded virtual environment first
+    local venv_path="/home/tenzin/Repositories/lookout/lookout"
+    
+    if [[ ! -f "$venv_path/bin/activate" ]]; then
+        echo "Error: Virtual environment not found at $venv_path"
+        # Restore the function before returning
+        source /home/tenzin/.config/zsh/user/fns.zsh
+        return 1
+    fi
+    
+    # Source the virtual environment and call lookout
+    source "$venv_path/bin/activate"
+    
+    # Check if lookout is now available
+    if command -v lookout > /dev/null 2>&1; then
+        command lookout "$@"
+    else
+        echo "Error: lookout command not found even after sourcing virtual environment"
+        # Restore the function before returning
+        source /home/tenzin/.config/zsh/user/fns.zsh
+        return 1
+    fi
+    
+    # Restore the function for next time
+    source /home/tenzin/.config/zsh/user/fns.zsh
+}
+
+gama() {
+    # Unset the function temporarily to check for the real command
+    unset -f gama
+    
+    # Source the hardcoded virtual environment first
+    local venv_path="/home/tenzin/Repositories/gama/gama"
+    
+    if [[ ! -f "$venv_path/bin/activate" ]]; then
+        echo "Error: Virtual environment not found at $venv_path"
+        # Restore the function before returning
+        source /home/tenzin/.config/zsh/user/fns.zsh
+        return 1
+    fi
+    
+    # Source the virtual environment and call gama
+    source "$venv_path/bin/activate"
+    
+    # Check if gama is now available
+    if command -v gama > /dev/null 2>&1; then
+        command gama "$@"
+    else
+        echo "Error: gama command not found even after sourcing virtual environment"
+        # Restore the function before returning
+        source /home/tenzin/.config/zsh/user/fns.zsh
+        return 1
+    fi
+    
+    # Restore the function for next time
+    source /home/tenzin/.config/zsh/user/fns.zsh
+}
+
+prepend-sudo() {
+    # Store current cursor position
+    local cursor_pos=$CURSOR
+    
+    # If buffer is empty or only whitespace, use last command from history
+    if [[ -z "${BUFFER// }" ]]; then
+        # Get the last command from history
+        BUFFER=$(fc -ln -1)
+        # Set cursor to end of buffer
+        cursor_pos=${#BUFFER}
+    fi
+    
+    # Trim leading whitespace from buffer
+    local trimmed_buffer="${BUFFER#"${BUFFER%%[![:space:]]*}"}"
+    
+    # Check if command already starts with sudo
+    if [[ "$trimmed_buffer" =~ ^sudo[[:space:]] ]]; then
+        # Command already has sudo, do nothing
+        return
+    fi
+    
+    # Calculate how much whitespace was at the beginning
+    local leading_space="${BUFFER%"$trimmed_buffer"}"
+    
+    # If there's any actual command content, prepend sudo
+    if [[ -n "$trimmed_buffer" ]]; then
+        BUFFER="${leading_space}sudo $trimmed_buffer"
+        # Adjust cursor position (+5 for "sudo ")
+        cursor_pos=$((cursor_pos + 5))
+    else
+        # Buffer was empty, just set to "sudo "
+        BUFFER="sudo "
+        cursor_pos=5
+    fi
+    
+    # Restore cursor position
+    CURSOR=$cursor_pos
 }
