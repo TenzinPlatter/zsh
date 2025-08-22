@@ -31,5 +31,8 @@ plugins=(
 
 eval "$(zoxide init zsh --cmd cd)"
 
+source '/usr/share/zsh-antidote/antidote.zsh'
+antidote load
+
 # hyde user stuff
 source ~/.config/zsh/user.zsh
