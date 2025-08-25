@@ -288,6 +288,7 @@ lookout() {
     source /home/tenzin/.config/zsh/user/fns.zsh
 }
 
+unalias gama 2>/dev/null
 gama() {
     # Unset the function temporarily to check for the real command
     unset -f gama

@@ -1,1 +1,6 @@
 user/env.zsh
+.zcompdump
+.zsh_history
+.zcompdump
+.zcompdump-*
+.antidote
