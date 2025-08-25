@@ -163,7 +163,7 @@ function _load_prompt() {
 
 HYDE_ZSH_DEFER="1"      #Unset this variable in $ZDOTDIR/user.zsh to disable HyDE's deferred Zsh loading.
 HYDE_ZSH_PROMPT="1"     #Unset this variable in $ZDOTDIR/user.zsh to disable HyDE's prompt customization.
-HYDE_ZSH_NO_PLUGINS="1" #Set this variable to "1" in $ZDOTDIR/user.zsh to disable HyDE's Zsh plugin loading.
+HYDE_ZSH_NO_PLUGINS="0" #Set this variable to "1" in $ZDOTDIR/user.zsh to disable HyDE's Zsh plugin loading.
 
 ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 
@@ -244,3 +244,5 @@ alias c='clear' \
     .4='cd ../../../..' \
     .5='cd ../../../../..' \
     mkdir='mkdir -p'
+
+

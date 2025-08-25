@@ -11,7 +11,7 @@ alias cb="colcon build"
 alias cbuild="colcon build --cmake-args -DCMAKE_EXPORT_COMPILE_COMMANDS=ON"
 alias cbuilds="colcon build --symlink-install --cmake-args -DCMAKE_EXPORT_COMPILE_COMMANDS=ON"
 
-alias srz="source ~/.zshrc"
+alias srz="source $ZDOTDIR/.zshrc"
 alias new="exec zsh"
 
 alias ssr="ssh rock@rock-5b"
@@ -49,6 +49,7 @@ alias ct="cargo test"
 
 alias db='distrobox'
 alias dbr="distrobox enter ros"
+alias dbs="distrobox enter siri"
 
 alias tmuxkill="tmux kill-session"
 alias srtx="tmux source ~/.tmux.conf"
@@ -73,8 +74,8 @@ alias pca="pre-commit run --all"
 alias nv="nvim"
 alias vn="nv"
 alias nvfd='nv $(fzfd)'
-alias nvsh='nv ~/.config/zsh/.zshrc && new'
-alias nvenv='nv ~/.config/zsh/.zshenv && source ~/.config/zsh/.zshenv'
+alias nvsh='(cd ~/.config/zsh && nv) && new'
+alias nvenv='nv ~/.zshenv && source ~/.zshenv'
 alias nvhl='nv ~/.config/hypr/.'
 alias nvcf='cd ~/.config/nvim && nv && cd -'
 alias nval='nv ~/.config/zsh/user/aliases.zsh && new'
