@@ -15,7 +15,7 @@ missim() {
         if [[ ! -f "$venv_path/bin/activate" ]]; then
             echo "Error: Virtual environment not found at $venv_path"
             # Restore the function before returning
-            source "$HOME/.config/zsh/user/gr.zsh"
+            source "$HOME/.config/zsh/user/fns/gr.zsh"
             return 1
         fi
         
@@ -31,13 +31,13 @@ missim() {
             echo "Error: missim command not found even after sourcing virtual environment"
             # Deactivate venv and restore the function before returning
             deactivate
-            source "$HOME/.config/zsh/user/gr.zsh"
+            source "$HOME/.config/zsh/user/fns/gr.zsh"
             return 1
         fi
     fi
     
     # Restore the function for next time
-    source "$HOME/.config/zsh/user/gr.zsh"
+    source "$HOME/.config/zsh/user/fns/gr.zsh"
 }
 
 lookout() {
@@ -50,7 +50,7 @@ lookout() {
     if [[ ! -f "$venv_path/bin/activate" ]]; then
         echo "Error: Virtual environment not found at $venv_path"
         # Restore the function before returning
-        source "$HOME/.config/zsh/user/gr.zsh"
+        source "$HOME/.config/zsh/user/fns/gr.zsh"
         return 1
     fi
     
@@ -66,12 +66,12 @@ lookout() {
         echo "Error: lookout command not found even after sourcing virtual environment"
         # Deactivate venv and restore the function before returning
         deactivate
-        source "$HOME/.config/zsh/user/gr.zsh"
+        source "$HOME/.config/zsh/user/fns/gr.zsh"
         return 1
     fi
     
     # Restore the function for next time
-    source "$HOME/.config/zsh/user/gr.zsh"
+    source "$HOME/.config/zsh/user/fns/gr.zsh"
 }
 
 gama() {
@@ -84,7 +84,7 @@ gama() {
     if [[ ! -f "$venv_path/bin/activate" ]]; then
         echo "Error: Virtual environment not found at $venv_path"
         # Restore the function before returning
-        source "$HOME/.config/zsh/user/gr.zsh"
+        source "$HOME/.config/zsh/user/fns/gr.zsh"
         return 1
     fi
     
@@ -100,11 +100,11 @@ gama() {
         echo "Error: gama command not found even after sourcing virtual environment"
         # Deactivate venv and restore the function before returning
         deactivate
-        source "$HOME/.config/zsh/user/gr.zsh"
+        source "$HOME/.config/zsh/user/fns/gr.zsh"
         return 1
     fi
     
     # Restore the function for next time
-    source "$HOME/.config/zsh/user/gr.zsh"
+    source "$HOME/.config/zsh/user/fns/gr.zsh"
 }
 
