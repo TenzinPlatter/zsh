@@ -2,16 +2,7 @@ bindkey -e
 
 export EDITOR=nvim
 
-for entry in ~/.config/zsh/user/*; do
-    if [[ -f $entry ]]; then
-        source $entry
-        continue
-    fi
-
-    for file in $entry/*; do
-        source $file
-    done
-done
+source "${ZDOTDIR:-$HOME}/load-modules.zsh"
 
 path=(
     $PATH
@@ -35,8 +26,6 @@ export PATH="${(j/:/)path}"
 export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/usr/local/cuda-13.0/lib64
 
 setopt NO_AUTO_CD
-
-eval "$(zoxide init zsh --cmd cd)"
 
 bindkey '^ ' autosuggest-accept
 
