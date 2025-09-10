@@ -44,30 +44,40 @@ def load_modules():
     
     sourced_files = []
     
-    for section_key, files in config.items():
-        # Convert dot notation to directory path
-        dir_path = zsh_dir / section_key.replace(".", "/")
-        
-        if not dir_path.exists():
-            continue
+    def process_yaml_section(data, path_parts=[]):
+        """Recursively process YAML structure using indentation levels as directory paths."""
+        for key, value in data.items():
+            current_path = path_parts + [key]
             
-        # Handle list of files
-        if isinstance(files, list):
-            file_list = files
-        else:
-            file_list = [files]
-            
-        for filename in file_list:
-            if filename == "*":
-                # Source all .zsh files in directory and subdirectories recursively
-                for zsh_file in dir_path.rglob("*.zsh"):
-                    if zsh_file.is_file():
-                        sourced_files.append(str(zsh_file))
+            if isinstance(value, dict):
+                # Nested dictionary - recurse deeper
+                process_yaml_section(value, current_path)
             else:
-                # Find file with smart extension handling
-                file_path = find_file_with_extension(dir_path, filename)
-                if file_path:
-                    sourced_files.append(str(file_path))
+                # This is a file list - process it
+                dir_path = zsh_dir / "/".join(current_path)
+                
+                if not dir_path.exists():
+                    continue
+                    
+                # Handle list of files
+                if isinstance(value, list):
+                    file_list = value
+                else:
+                    file_list = [value]
+                    
+                for filename in file_list:
+                    if filename == "*":
+                        # Source all .zsh files in directory and subdirectories recursively
+                        for zsh_file in dir_path.rglob("*.zsh"):
+                            if zsh_file.is_file():
+                                sourced_files.append(str(zsh_file))
+                    else:
+                        # Find file with smart extension handling
+                        file_path = find_file_with_extension(dir_path, filename)
+                        if file_path:
+                            sourced_files.append(str(file_path))
+    
+    process_yaml_section(config)
     
     # Output the files to source (zsh will read this)
     for file_path in sourced_files:
