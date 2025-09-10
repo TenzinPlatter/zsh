@@ -28,10 +28,6 @@ alias python="python3"
 alias mkdir="mkdir -p"
 alias rmd="rm -rf"
 
-alias rbug="RUST_BACKTRACE=1"
-alias cr="cargo run"
-alias ct="cargo test"
-
 alias db='distrobox'
 alias dbr="distrobox enter ros"
 alias dbs="distrobox enter siri"
