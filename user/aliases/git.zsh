@@ -1,0 +1,15 @@
+alias lg='lazygit'
+alias gs='git status '
+alias ga='git add '
+alias gb='git branch '
+alias gP='git push'
+alias gp='git pull'
+alias gc='git commit'
+alias gd='git diff --output-indicator-new=" " --output-indicator-old=" "' 
+alias gco='git checkout '
+alias gk='gitk --all&'
+alias gx='gitx --all'
+alias gcl='git clone'
+alias pca="pre-commit run --all"
+alias pcf="pre-commit run --files"
+alias pcr="pre-commit run"
