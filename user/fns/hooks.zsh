@@ -54,6 +54,22 @@ resume() {
     zle accept-line
 }
 
+forward-word-dir () {
+    local WORDCHARS='*?_-.[]~=/&;!#$%^(){}<>'
+    zle forward-word
+}
+zle -N forward-word-dir
+
+backward-word-dir () {
+    local WORDCHARS='*?_-.[]~=/&;!#$%^(){}<>'
+    zle backward-word
+}
+zle -N backward-word-dir
+
+# Bind the custom functions
+bindkey "^[[1;5C" forward-word-dir      # Ctrl+Right
+bindkey "^[[1;5D" backward-word-dir     # Ctrl+Left
+
 zle -N resume
 bindkey '' resume
 

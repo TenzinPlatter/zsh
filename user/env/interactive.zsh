@@ -7,9 +7,6 @@ if [[ $- == *i* ]]; then
 
   bindkey '^ ' autosuggest-accept
 
-  zle -N set-nv
-  bindkey '' set-nv
-
   zle -N set-cd
   bindkey '' set-cd
 

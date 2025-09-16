@@ -4,3 +4,4 @@
 .zcompdump-*
 .antidote
 user/env/machine.zsh
+.zsh_plugins.zsh

@@ -204,3 +204,51 @@ prepend-sudo() {
     # Restore cursor position
     CURSOR=$cursor_pos
 }
+
+swap() {
+    # Check if exactly 2 arguments are provided
+    if [[ $# -ne 2 ]]; then
+        echo "Usage: swap <file1> <file2>"
+        echo "Swaps the contents of two files"
+        return 1
+    fi
+
+    local file1="$1"
+    local file2="$2"
+
+    # Check if both files exist
+    if [[ ! -f "$file1" ]]; then
+        echo "Error: '$file1' does not exist or is not a file"
+        return 1
+    fi
+
+    if [[ ! -f "$file2" ]]; then
+        echo "Error: '$file2' does not exist or is not a file"
+        return 1
+    fi
+
+    # Check if files are readable and writable
+    if [[ ! -r "$file1" || ! -w "$file1" ]]; then
+        echo "Error: '$file1' is not readable or writable"
+        return 1
+    fi
+
+    if [[ ! -r "$file2" || ! -w "$file2" ]]; then
+        echo "Error: '$file2' is not readable or writable"
+        return 1
+    fi
+
+    # Create a temporary file in the same directory as file1 for atomic operation
+    local temp_file=$(mktemp "${file1}.swap.XXXXXX")
+    
+    # Perform the swap using a temporary file
+    if cp "$file1" "$temp_file" && cp "$file2" "$file1" && cp "$temp_file" "$file2"; then
+        rm "$temp_file"
+        echo "Successfully swapped '$file1' and '$file2'"
+    else
+        # Clean up temp file if something went wrong
+        [[ -f "$temp_file" ]] && rm "$temp_file"
+        echo "Error: Failed to swap files"
+        return 1
+    fi
+}
