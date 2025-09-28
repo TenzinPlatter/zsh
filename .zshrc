@@ -25,6 +25,8 @@ export NIXPKGS_ALLOW_UNFREE=1
 export PATH="${(j/:/)path}"
 export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/usr/local/cuda-13.0/lib64
 
+# export LG_CONFIG_FILE="$HOME/.config/lazygit/config.yml,$HOME/.cache/lazygit-theme.yml"
+
 setopt NO_AUTO_CD
 
 bindkey '^ ' autosuggest-accept
@@ -41,3 +43,15 @@ zle -N recent-paths
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="$HOME/.sdkman"
 [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
+
+export NVM_DIR="$HOME/.config/nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+# pnpm
+export PNPM_HOME="/home/tenzin/.local/share/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end

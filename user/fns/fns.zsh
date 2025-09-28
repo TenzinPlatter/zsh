@@ -6,19 +6,19 @@ mkdirc() {
 }
 
 txa() {
-  if [[ -z "$1" ]]; then
-    tmux attach-session
-  else
-    tmux attach-session -t "$1"
-  fi
+    if [[ -z "$1" ]]; then
+        tmux attach-session
+    else
+        tmux attach-session -t "$1"
+    fi
 }
 
 txn() {
-  if [[ -z "$1" ]]; then
-    tmux new-session
-  else
-    tmux new-session -s "$1"
-  fi
+    if [[ -z "$1" ]]; then
+        tmux new-session
+    else
+        tmux new-session -s "$1"
+    fi
 }
 
 nr() {
@@ -27,7 +27,7 @@ nr() {
         echo "Example: nix-remove-many firefox git nodejs"
         return 1
     fi
-    
+
     echo "Removing packages: $@"
     for package in "$@"; do
         echo "Removing: $package"
@@ -42,18 +42,18 @@ ni() {
         echo "Usage: nix-install <package1> [package2] [package3] ..."
         return 1
     fi
-    
+
     # Loop through all arguments and try to install each package
     for package in "$@"; do
         echo "Installing package: $package"
-        
+
         # Try to install the package using nix-env
         if nix-env -iA nixpkgs.$package; then
             echo "✅ Successfully installed: $package"
         else
             echo "❌ Failed to install: $package"
             echo "   Trying alternative installation method..."
-            
+
             # Try installing without the nixpkgs prefix
             if nix-env -i $package; then
                 echo "✅ Successfully installed: $package (alternative method)"
@@ -61,40 +61,48 @@ ni() {
                 echo "❌ Failed to install: $package (both methods failed)"
             fi
         fi
-        
+
         echo "---"
     done
-    
+
     echo "Installation process completed for all packages."
 }
 
 inr() {
-	sudo apt install ros-jazzy-$1
+    sudo apt install ros-jazzy-$1
 }
 
 sr() {
-  if ! command -v ros2 &> /dev/null; then
-    source /opt/ros/jazzy/setup.zsh
-    echo "Sourced global overlay at /opt/ros/jazzy"
-  fi
+    if ! command -v ros2 &> /dev/null; then
+        source /opt/ros/jazzy/setup.zsh
+        echo "Sourced global overlay at /opt/ros/jazzy"
+    fi
 
-  if [[ ! "$(which rosdep)" = "/home/tenzin/Repositories/rosdep/install/rosdep/bin/rosdep" ]]; then
-    source /home/tenzin/Repositories/rosdep/install/setup.zsh
-    echo "Sourced rosdep fork at /home/tenzin/Repositories/rosdep"
-  fi
+    if [[ ! "$(which rosdep)" = "/home/tenzin/Repositories/rosdep/install/rosdep/bin/rosdep" ]]; then
+        source /home/tenzin/Repositories/rosdep/install/setup.zsh
+        echo "Sourced rosdep fork at /home/tenzin/Repositories/rosdep"
+    fi
 
-	if [[ -f ./install/setup.zsh ]]; then
-		source ./install/setup.zsh
-		echo "Sourced local workspace"
-	fi
+    if [[ -f ./install/setup.zsh ]]; then
+        source ./install/setup.zsh
+        echo "Sourced local workspace"
+    fi
 }
 
 foxglove() {
-	if ! command -v "ros2" >/dev/null 2>&1; then
-		source /opt/ros/jazzy/setup.zsh
-	fi
+    if ! command -v "ros2" >/dev/null 2>&1; then
+        source /opt/ros/jazzy/setup.zsh
+    fi
 
-	ros2 launch foxglove_bridge foxglove_bridge_launch.xml > /dev/null  2>&1 &
+    cmd="ros2 launch foxglove_bridge foxglove_bridge_launch.xml"
+
+    if [[ ! -z "$1" ]]; then
+        echo "Running: ros2 launch foxglove_bridge foxglove_bridge_launch.xml port:="$1" > /dev/null 2>&1 &"
+        ros2 launch foxglove_bridge foxglove_bridge_launch.xml port:="$1" > /dev/null 2>&1 &
+    else
+        echo "Running: ros2 launch foxglove_bridge foxglove_bridge_launch.xml > /dev/null 2>&1 &"
+        ros2 launch foxglove_bridge foxglove_bridge_launch.xml > /dev/null 2>&1 &
+    fi
 }
 
 function findbin() {
@@ -132,44 +140,44 @@ function findbin() {
 }
 
 workon() {
-  # idk from chatgpt
-  setopt nullglob
-  
-  venv=""
-  
-  if [[ ! -z "$1" ]]; then
-    venv=$1
-  else
-		# match hidden and normal dirs
-    for d in */ .*/ ; do
-      # $d ends in slash already, so don't include it in path
-      if [[ -f "$d"bin/activate ]]; then
-        venv=$d
-        break
-      fi
-    done 2>/dev/null
-  fi
+    # idk from chatgpt
+    setopt nullglob
 
-  if [[ -z $venv ]]; then
-    echo no venv found/provided, defaulting to \'.venv\'
-    venv=".venv"
-  elif [[ -d $venv && -f $venv/bin/activate ]]; then
-    echo found venv \'$venv\', activating...
-  else
-    echo creating venv \'$venv\'
-  fi
+    venv=""
 
-  if [[ ! -d $venv ]]; then
-    python3 -m venv $venv
-  fi  
+    if [[ ! -z "$1" ]]; then
+        venv=$1
+    else
+        # match hidden and normal dirs
+        for d in */ .*/ ; do
+            # $d ends in slash already, so don't include it in path
+            if [[ -f "$d"bin/activate ]]; then
+                venv=$d
+                break
+            fi
+        done 2>/dev/null
+    fi
 
-	source $venv/bin/activate
+    if [[ -z $venv ]]; then
+        echo no venv found/provided, defaulting to \'.venv\'
+        venv=".venv"
+    elif [[ -d $venv && -f $venv/bin/activate ]]; then
+        echo found venv \'$venv\', activating...
+    else
+        echo creating venv \'$venv\'
+    fi
+
+    if [[ ! -d $venv ]]; then
+        python3 -m venv $venv
+    fi
+
+    source $venv/bin/activate
 }
 
 prepend-sudo() {
     # Store current cursor position
     local cursor_pos=$CURSOR
-    
+
     # If buffer is empty or only whitespace, use last command from history
     if [[ -z "${BUFFER// }" ]]; then
         # Get the last command from history
@@ -177,19 +185,19 @@ prepend-sudo() {
         # Set cursor to end of buffer
         cursor_pos=${#BUFFER}
     fi
-    
+
     # Trim leading whitespace from buffer
     local trimmed_buffer="${BUFFER#"${BUFFER%%[![:space:]]*}"}"
-    
+
     # Check if command already starts with sudo
     if [[ "$trimmed_buffer" =~ ^sudo[[:space:]] ]]; then
         # Command already has sudo, do nothing
         return
     fi
-    
+
     # Calculate how much whitespace was at the beginning
     local leading_space="${BUFFER%"$trimmed_buffer"}"
-    
+
     # If there's any actual command content, prepend sudo
     if [[ -n "$trimmed_buffer" ]]; then
         BUFFER="${leading_space}sudo $trimmed_buffer"
@@ -200,7 +208,7 @@ prepend-sudo() {
         BUFFER="sudo "
         cursor_pos=5
     fi
-    
+
     # Restore cursor position
     CURSOR=$cursor_pos
 }
@@ -240,7 +248,7 @@ swap() {
 
     # Create a temporary file in the same directory as file1 for atomic operation
     local temp_file=$(mktemp "${file1}.swap.XXXXXX")
-    
+
     # Perform the swap using a temporary file
     if cp "$file1" "$temp_file" && cp "$file2" "$file1" && cp "$temp_file" "$file2"; then
         rm "$temp_file"

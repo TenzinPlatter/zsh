@@ -1,5 +1,7 @@
 [[ -f ~/.zsh/machine.zsh ]] && source ~/.zsh/machine.zsh
 
+alias cl="claude"
+
 alias capson="sudo systemctl start udevmon"
 alias capsoff="sudo systemctl stop udevmon"
 
