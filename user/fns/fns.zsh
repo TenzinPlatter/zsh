@@ -83,9 +83,9 @@ sr() {
         echo "Sourced rosdep fork at /home/tenzin/Repositories/rosdep"
     fi
 
-    local dir_name = ${PWD:t}
-    if [[ -f /opt/greenroom/$dir_name/install/setup.bash ]];
-        sour
+    local dir_name="${PWD:t}"
+    if [[ -f /opt/greenroom/$dir_name/install/setup.bash ]]; then
+        source /opt/greenroom/$dir_name/install/setup.bash
     fi
 
     if [[ -f ./install/setup.zsh ]]; then
