@@ -1,9 +1,2 @@
 user:
   - "*"
-
-disabled:
-  user:
-    programs:
-      - "node"
-    # env:
-      # - "ros"
