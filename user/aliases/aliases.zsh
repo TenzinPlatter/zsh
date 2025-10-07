@@ -6,7 +6,6 @@ alias capson="sudo systemctl start udevmon"
 alias capsoff="sudo systemctl stop udevmon"
 
 alias dk="docker"
-alias dl="docker logs -f"
 alias dcu="docker compose up -d"
 alias dcub="docker compose up -d --build"
 
