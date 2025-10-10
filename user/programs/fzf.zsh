@@ -1,3 +1,5 @@
+[[ -f ~/.fzf.zsh ]] && source ~/.fzf.zsh
+
 # best fzf aliases ever
 _fuzzy_change_directory() {
     local initial_query="$1"
@@ -103,8 +105,6 @@ _fuzzy_search_cmd_history() {
   fi
   return $ret
 }
-
-
 
 alias ffec='_fuzzy_edit_search_file_content' \
     ffcd='_fuzzy_change_directory' \
