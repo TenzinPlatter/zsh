@@ -2,8 +2,8 @@
 
 alias cl="claude"
 
-alias capson="sudo systemctl start udevmon"
-alias capsoff="sudo systemctl stop udevmon"
+alias capson="sudo systemctl enable --now udevmon"
+alias capsoff="sudo systemctl disable --now udevmon"
 
 alias dk="docker"
 alias dcu="docker compose up -d"
