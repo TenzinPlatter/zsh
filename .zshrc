@@ -29,7 +29,11 @@ export POKEGO_CACHE_AGE=300
 
 setopt NO_AUTO_CD
 
-bindkey '^ ' autosuggest-accept
+autoload -z edit-command-line
 
 zle -N menu-search
 zle -N recent-paths
+zle -N edit-command-line
+
+bindkey '^ ' autosuggest-accept
+bindkey '' edit-command-line

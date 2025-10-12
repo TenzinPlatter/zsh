@@ -112,7 +112,7 @@ gama() {
     source "$HOME/.config/zsh/user/fns/gr.zsh"
 }
 
-function set_platform_module() {
+set_platform_module() {
     local dir_name="${PWD:t}"
 
     if [[ "$dir_name" == platform_* ]]; then
@@ -121,7 +121,6 @@ function set_platform_module() {
         unset PLATFORM_MODULE
     fi
 }
-
 
 autoload -U add-zsh-hook
 add-zsh-hook chpwd set_platform_module
