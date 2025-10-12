@@ -1,7 +1,7 @@
 [[ -f ~/.zsh/machine.zsh ]] && source ~/.zsh/machine.zsh
 
 alias cl="claude"
-alias wpp="wallpaper-picker.sh"
+alias wp="wallpaper-picker.sh"
 
 alias capson="sudo systemctl enable --now udevmon"
 alias capsoff="sudo systemctl disable --now udevmon"
