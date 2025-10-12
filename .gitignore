@@ -5,3 +5,5 @@
 .antidote
 user/env/machine.zsh
 .zsh_plugins.zsh
+.zsh_history*
+**/*env*
