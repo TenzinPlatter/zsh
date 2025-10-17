@@ -265,3 +265,7 @@ swap() {
         return 1
     fi
 }
+
+nvl() {
+    eval "$(fc -ln -1)" | nvim -
+}
