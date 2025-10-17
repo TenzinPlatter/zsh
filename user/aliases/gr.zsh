@@ -1,3 +1,5 @@
+alias nvcg="cd ~/.config/greenroom && nv && cd -"
+
 alias gvr="gama vessel down && gama vessel up"
 alias gv="gama vessel"
 
