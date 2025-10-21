@@ -114,12 +114,23 @@ gama() {
 
 set_platform_module() {
     local dir_name="${PWD:t}"
+    export PLATFORM_MODULE="$dir_name"
+}
 
-    if [[ "$dir_name" == platform_* ]]; then
-        export PLATFORM_MODULE="$dir_name"
-    else
-        unset PLATFORM_MODULE
+pbc() {
+    if [[ "$(which rosdep)" == "/usr/bin/rosdep" ]]; then
+        sr
     fi
+
+    if [[ "$1" == "-i" ]]; then
+        platform pkg install-deps
+    fi
+
+    echo Running: colcon build --merge-install --install-base "/opt/greenroom/$PLATFORM_MODULE" --cmake-args -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
+
+    colcon build --merge-install --install-base "/opt/greenroom/$PLATFORM_MODULE" --cmake-args -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
+
+    unset PLATFORM_MODULE
 }
 
 autoload -U add-zsh-hook
