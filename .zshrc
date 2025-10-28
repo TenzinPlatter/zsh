@@ -15,6 +15,7 @@ path=(
     /usr/local/bin
     /usr/local/cuda-13.0/bin
     /home/tenzin/bin
+    /usr/local/go/bin
 )
 
 export ZSH="$HOME/.oh-my-zsh"
