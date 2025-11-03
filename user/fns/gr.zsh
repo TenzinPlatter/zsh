@@ -126,7 +126,7 @@ pbc() {
     # Parse options
     zparseopts -D -E -F i=install -install=install || return 1
 
-    # Remaining arguments are packages (currently unused in original script)
+    # Remaining arguments are packages
     local packages=("$@")
 
     # Get platform module from current directory
@@ -139,5 +139,13 @@ pbc() {
         platform pkg install-deps || return 1
     fi
 
-    colcon build --merge-install --install-base "/opt/greenroom/${platform_module}" --cmake-args -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
+    # Build colcon command
+    local colcon_cmd=(colcon build --merge-install --install-base "/opt/greenroom/${platform_module}" --cmake-args -DCMAKE_EXPORT_COMPILE_COMMANDS=ON)
+
+    # Add packages-up-to if packages are specified
+    if [[ ${#packages[@]} -gt 0 ]]; then
+        colcon_cmd+=(--packages-up-to "${packages[@]}")
+    fi
+
+    "${colcon_cmd[@]}"
 }
