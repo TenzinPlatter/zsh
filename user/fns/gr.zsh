@@ -122,9 +122,10 @@ add-zsh-hook chpwd set_platform_module
 
 pbc() {
     local install=""
+    local deps=""
 
     # Parse options
-    zparseopts -D -E -F i=install -install=install || return 1
+    zparseopts -D -E -F i=install -install=install d=deps -deps=deps || return 1
 
     # Remaining arguments are packages
     local packages=("$@")
@@ -142,9 +143,13 @@ pbc() {
     # Build colcon command
     local colcon_cmd=(colcon build --merge-install --install-base "/opt/greenroom/${platform_module}" --cmake-args -DCMAKE_EXPORT_COMPILE_COMMANDS=ON)
 
-    # Add packages-up-to if packages are specified
+    # Add package selection flags if packages are specified
     if [[ ${#packages[@]} -gt 0 ]]; then
-        colcon_cmd+=(--packages-up-to "${packages[@]}")
+        if [[ -n "$deps" ]]; then
+            colcon_cmd+=(--packages-up-to "${packages[@]}")
+        else
+            colcon_cmd+=(--packages-select "${packages[@]}")
+        fi
     fi
 
     "${colcon_cmd[@]}"
