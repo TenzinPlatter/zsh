@@ -119,3 +119,25 @@ set_platform_module() {
 
 autoload -U add-zsh-hook
 add-zsh-hook chpwd set_platform_module
+
+pbc() {
+    local install=""
+
+    # Parse options
+    zparseopts -D -E -F i=install -install=install || return 1
+
+    # Remaining arguments are packages (currently unused in original script)
+    local packages=("$@")
+
+    # Get platform module from current directory
+    local platform_module="${PWD:t}"
+
+    # Always source ROS environment
+    sr || return 1
+
+    if [[ -n "$install" ]]; then
+        platform pkg install-deps || return 1
+    fi
+
+    colcon build --merge-install --install-base "/opt/greenroom/${platform_module}" --cmake-args -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
+}
