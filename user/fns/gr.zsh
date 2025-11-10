@@ -123,12 +123,26 @@ add-zsh-hook chpwd set_platform_module
 pbc() {
     local install=""
     local deps=""
+    local extra_flags=()
 
     # Parse options
     zparseopts -D -E -F i=install -install=install d=deps -deps=deps || return 1
 
-    # Remaining arguments are packages
-    local packages=("$@")
+    # Check for '--' separator to split packages from extra flags
+    local packages=()
+    local found_separator=0
+    for arg in "$@"; do
+        if [[ "$arg" == "--" ]]; then
+            found_separator=1
+            continue  # Skip the '--' itself, don't add it to any array
+        fi
+
+        if [[ $found_separator -eq 0 ]]; then
+            packages+=("$arg")
+        else
+            extra_flags+=("$arg")
+        fi
+    done
 
     # Get platform module from current directory
     local platform_module="${PWD:t}"
@@ -150,6 +164,11 @@ pbc() {
         else
             colcon_cmd+=(--packages-select "${packages[@]}")
         fi
+    fi
+
+    # Add extra flags if provided
+    if [[ ${#extra_flags[@]} -gt 0 ]]; then
+        colcon_cmd+=("${extra_flags[@]}")
     fi
 
     "${colcon_cmd[@]}"
