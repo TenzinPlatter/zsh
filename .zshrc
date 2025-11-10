@@ -28,6 +28,8 @@ export PATH="${(j/:/)path}"
 export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/usr/local/cuda-13.0/lib64
 export POKEGO_CACHE_AGE=300
 
+export MANPAGER='nvim +Man!'   
+
 setopt NO_AUTO_CD
 
 autoload -z edit-command-line
