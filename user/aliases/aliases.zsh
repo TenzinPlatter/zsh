@@ -1,5 +1,7 @@
 [[ -f ~/.zsh/machine.zsh ]] && source ~/.zsh/machine.zsh
 
+alias cpwd="pwd | tr -d '\n' | wl-copy"
+
 alias cl="claude"
 alias wp="wallpaper-picker.sh"
 
