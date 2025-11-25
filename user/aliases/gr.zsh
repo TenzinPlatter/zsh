@@ -12,6 +12,7 @@ alias ssc="ssh gr@gr-clanker"
 alias ssgp="ssh gr-sim-perth@gr-sim-perth"
 alias ssl1="ssh gr@lookout-1-carrack-leidos-au"
 alias ssl2="ssh gr@lookout-2-carrack-leidos-au"
+alias ssm="ssh gr@gr-monolith"
 
 alias cb="colcon build"
 alias cbuild="colcon build --cmake-args -DCMAKE_EXPORT_COMPILE_COMMANDS=ON"
